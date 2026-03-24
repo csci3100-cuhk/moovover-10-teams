@@ -1,0 +1,34 @@
+name: CI
+
+# When to run: on every push and every pull request
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Download the code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Install Ruby
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3.8'   # must match the version in Gemfile
+          bundler-cache: true    # automatically runs 'bundle install'
+
+      # Step 3: Create the test database
+      - name: Set up database
+        run: |
+          bundle exec rails db:create RAILS_ENV=test
+          bundle exec rails db:schema:load RAILS_ENV=test
+
+      # Step 4: Run the tests
+      - name: Run RSpec
+        run: bundle exec rspec
