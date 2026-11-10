@@ -38,8 +38,8 @@ class MoviesController < ApplicationController
   # Alternative ways to detect AJAX (ESaaS §6.7):
   #   request.xhr?          → true if X-Requested-With header present
   #   request.format.json?  → true if client requested JSON
-  def show
-  end
+  # def show
+  # end
 
   # ============================================================
   # Lecture 8 - TDD example: searching TMDb
